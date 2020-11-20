@@ -21,16 +21,6 @@ export default new Vuex.Store({
         setError(state, payload) {
             state.error = payload;
         },
-            setProductList(state, products) {
-            state.productList = products;
-        },
-        updateProduct(state, product) {
-            state.name = product.name
-            state.vendor_code = product.vendor_code
-        },
-        saveProduct(state, product) {
-            state.product = product
-        }
     },
     actions: {
         getProducts({ commit }) {
@@ -44,23 +34,9 @@ export default new Vuex.Store({
                 .finally(() => commit('toggleLoading', false));
         },
 
-        setProductList({commit}, products) {
-            commit('setProductList', products)
-        },
-        updateProduct({commit}, product) {
-            commit('updateProduct', product)
-        },
-        saveProduct({commit}, product) {
-            commit('saveProduct', product)
-        }
     },
     getters: {
         products: s => s.products,
         productById: s => id => s.products.filter(t => t.id === id)
     },
-    // apollo: {
-    //     products: {
-    //         query: GET_PRODUCTS
-    //     }
-    // }
 })
