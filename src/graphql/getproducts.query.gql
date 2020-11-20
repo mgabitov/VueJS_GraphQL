@@ -1,0 +1,9 @@
+query getproducts {
+    products {
+      id
+      name
+      vendor_code
+      series
+      price
+    }
+  }
