@@ -1,9 +1,8 @@
 query getproducts {
-    products {
+    products(order_by: {id: asc}) {
       id
       name
       vendor_code
       series
-      price
     }
   }

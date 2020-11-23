@@ -1,18 +1,34 @@
 <template>
     <div class="form-style-6">
         <h1>Редактироване товара</h1>
-        <form>
-            <label class="active" for="name">Название</label>
-            <input :value="name" id="name" type="text" class="validate">
-            <label class="active" for="code">Артикул</label>
-            <input :value="code" id="code" type="number" class="validate">
-            <router-link to="/"><input type="submit" value="Сохранить" /></router-link>
+        <form @submit="submit">
+            <input id="id" v-model="id" type="text" class="validate" hidden>
+            <label class="active" for="name" >Название</label>
+            <input id="name" v-model="name" type="text" class="validate">
+            <label class="active" for="vendor_code">Артикул</label>
+            <input v-model="vendor_code" id="vendor_code" type="text" class="validate">
+            <input type="submit" value="Сохранить"/>
         </form>
     </div>
 </template>
 
 <script>
     import {mapState} from "vuex";
+    import gql from 'graphql-tag'
+    import getproductsquery from '../graphql/getproducts.query.gql'
+
+    const UPDATE_PRODUCTS = gql`
+    mutation update_product($id: String, $name: String, $vendor_code: String) {
+    update_products(where: {id:{_eq:$id}}, _set: {name: $name, vendor_code: $vendor_code}) {
+    returning {
+      id
+      name
+      series
+      vendor_code
+    }
+  }
+}
+`
 
     export default {
         name: "Update",
@@ -20,8 +36,7 @@
             product: '',
             id: '',
             name: '',
-            code: ''
-
+            vendor_code: '',
         }),
         computed: {
             ...mapState(['products', 'isLoading']),
@@ -30,7 +45,24 @@
             this.product = this.$store.getters.productById(this.$route.params.id)
             this.id = this.product[0].id
             this.name = this.product[0].name
-            this.code = this.product[0].vendor_code
+            this.vendor_code = this.product[0].vendor_code
+        },
+        methods: {
+            submit(e){
+                e.preventDefault();
+                console.log(this.$data)
+                const { id, name, vendor_code} = this.$data
+                this.$apollo.mutate({
+                    mutation: UPDATE_PRODUCTS,
+                    variables: {
+                        id,
+                        name,
+                        vendor_code
+                    },
+                    refetchQueries: ['getproductsquery']
+                })
+                this.$router.push('/')
+            }
         }
     }
 
@@ -58,8 +90,7 @@
 
     .form-style-6 input[type="text"],
     .form-style-6 input[type="date"],
-    .form-style-6 input[type="number"]
-    {
+    .form-style-6 input[type="number"] {
         -webkit-transition: all 0.30s ease-in-out;
         -moz-transition: all 0.30s ease-in-out;
         -ms-transition: all 0.30s ease-in-out;
