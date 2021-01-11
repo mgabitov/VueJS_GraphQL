@@ -12,7 +12,7 @@
             </tr>
             </thead>
             <tbody>
-            <product-item v-for="product in paginatedUsers" :key="product.id" :product="product"
+            <product-item v-for="product in paginatedProducts" :key="product.id" :product="product"
             ></product-item>
             </tbody>
         </table>
@@ -44,7 +44,7 @@
         data() {
             return {
                 pageNumber: 1,
-                pageSize: 40,
+                pageSize: 10,
                 pageCount: 0,
             };
         },
@@ -54,7 +54,7 @@
             pages() {
                 return Math.ceil(this.products.length / this.pageSize)
             },
-            paginatedUsers() {
+            paginatedProducts() {
                 let from = (this.pageNumber - 1) * this.pageSize
                 let to = from + this.pageSize
                 return this.products.slice(from, to)

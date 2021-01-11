@@ -3,7 +3,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 const httpLink = createHttpLink({
-    uri: 'https://sweet-hedgehog-55.hasura.app/v1/graphql'
+    uri: 'https://fleet-marmoset-99.hasura.app/v1/graphql'
 });
 
 const cache = new InMemoryCache();

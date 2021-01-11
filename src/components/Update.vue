@@ -18,13 +18,14 @@
     import getproductsquery from '../graphql/getproducts.query.gql'
 
     const UPDATE_PRODUCTS = gql`
-    mutation update_product($id: String, $name: String, $vendor_code: String) {
+    mutation update_product($id: Int, $name: String, $vendor_code: Int) {
     update_products(where: {id:{_eq:$id}}, _set: {name: $name, vendor_code: $vendor_code}) {
     returning {
       id
       name
-      series
       vendor_code
+      series
+      price
     }
   }
 }

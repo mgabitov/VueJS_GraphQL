@@ -17,7 +17,7 @@ Vue.use(VueApollo)
 export const bus = new Vue();
 
 const httpLink = new HttpLink({
-  uri: 'https://sweet-hedgehog-55.hasura.app/v1/graphql'
+  uri: 'https://fleet-marmoset-99.hasura.app/v1/graphql'
 })
 
 const cache = new InMemoryCache();

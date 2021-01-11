@@ -4,5 +4,6 @@ query getproducts {
       name
       vendor_code
       series
+      price
     }
   }
